@@ -1,0 +1,20 @@
+<html>
+<body>
+
+<script type="text/javascript">
+
+function factorial(num){
+	if(num<=1){
+		return 1;
+	}else{
+		//return num*function(num-1);
+		return num*arguments.callee(num-1);
+	}
+}
+var obj = {name:"res"};
+obj = factorial;
+alert(obj(2));
+</script>
+
+</body>
+</html>

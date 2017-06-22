@@ -1,0 +1,27 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<title>10-1-4 Text类型</title>
+</head>
+<body>
+	<div><!-- yogurt --></div>
+	<script type="text/javascript">
+		var element = document.createElement("div");
+		element.className = "mes";
+		var textNode = document.createTextNode("hello");
+		element.appendChild(textNode);
+		
+		var anotherTextNode = document.createTextNode("world!");
+		element.appendChild(anotherTextNode);
+		document.body.appendChild(element);
+		
+		alert(element.childNodes.length);
+		element.normalize();
+		alert(element.childNodes.length);
+		
+		var newTextNode = element.firstChild.splitText(5);
+		alert(element.childNodes.length);
+		
+	</script>	
+</body>
+</html>

@@ -1,0 +1,26 @@
+<html>
+<body>
+
+<script type="text/javascript">
+
+function myObject(){
+	var privateVariable = 10;
+	function privateFunc(){
+		return false;
+	}
+	
+	//特权方法
+	this.publicMethod = function(){
+		privateVariable++;
+		return privateFunc();
+	};
+}
+
+var myObj = new myObject();
+alert(myObj.privateVariable);//undefined
+alert(myObj.publicMethod());//false
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<html>
+<body>
+
+<script type="text/javascript">
+//只要创建一个新函数，就会为该函数创建一个prototype属性，指向函数的原型对象
+function Person(){
+}
+Person.prototype = {
+	name:"lilei",
+	age:19,
+	job:"engineer",
+	friend:["jim","tom","katy"],
+	sayname:function(){
+		alert(this.name);
+	}
+};
+var person1 = new Person();
+var person2 = new Person();
+person1.name = "cake";
+person1.sayname();
+person2.sayname();
+
+</script>
+
+</body>
+</html>

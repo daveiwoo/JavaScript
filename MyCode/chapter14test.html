@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+		<title>第十四章</title>
+	</head>
+	<body>
+		<form method="post" id="myForm">
+			<div><p>字段事件</p></div>
+			<input type="text" name="text1" id="myText1" value="" />
+			<div><p>文本选择</p></div>
+			<input type="text" name="text2" id="myText2" value="" />
+			<div><p>文本过滤</p></div>
+			<input type="text" name="text3" id="myText3" value="" />
+			<div><p>必填字段</p></div>
+			<input type="submit" name="text4" id="myText4" value="" required />
+			
+			<ul>
+				<li> <input type="radio" name="color" value="red" />Red</li>
+				<li> <input type="radio" name="color" value="green" />Green</li>
+				<li> <input type="radio" name="color" value="blue" />Blue</li>			
+			</ul>
+			
+			<select  name="selectColor" id="myselect">	<!-- 多选？？？-->
+				<option value="red">红色</option>
+				<option value="green">绿色</option>
+				<option value="blue">蓝色</option>
+			</select>
+			
+		</form>	
+		<iframe name="richedit" height="200" width="500" 
+				src="file:///F:/JavaScript/MyCode/chap5-2-2.html">
+		</iframe>
+		<script>
+			var form = document.getElementById("myForm");
+			//alert(form.elements[0] === form.elements["test1"]);		//true
+			//alert(form.elements[0] === form[0]);		//true
+			//alert(form.elements["color"] === form["color"]);		//true
+			
+			//DOM0级事件处理程序，在代码运行之前不会指定时间处理程序
+			var textbox = document.forms[0].elements[0];
+			/********表单字段事件********/
+			textbox.onfocus = function(event){
+				event.target.style.backgroundColor = "yellow";
+			};
+			//focus和blur事件均不会冒泡
+			var textboxblurHandler = function(event){
+				if(/[^\d]/.test(event.target.value)){
+					event.target.style.backgroundColor = "red";
+				}else{
+					event.target.style.backgroundColor = "gray";
+				}				
+			};
+			textbox.addEventListener("blur",textboxblurHandler,true);
+			
+			var textboxchangeHandler = function(event){
+				if(/[^\d]/.test(event.target.value)){
+					event.target.style.backgroundColor = "red";
+				}else{
+					event.target.style.backgroundColor = "";
+				}
+			};
+			textbox.addEventListener("change",textboxchangeHandler,true);
+			//select()方法用于选择文本框中的所!有!文本
+			var text2 = form.elements["text2"];
+			text2.onselect = function(event){
+				alert("text value:"+event.target.value.substring(text2.selectionStart,text2.selectionEnd));
+			};
+			/********过滤输入********/
+			var text3 = form.elements["text3"];
+			function getCharcode(event){
+				if(typeof event.charCode == "number"){
+					return event.charCode;
+				}
+				else{
+					return event.keyCode;
+				}
+			}
+			text3.onkeypress = function(event){
+				var charCode = getCharcode(event);
+				if(!/\d/.test(String.fromCharCode(charCode)) && charCode>9 &&!event.ctrlKey){
+					event.preventDefault();
+				}
+			};
+			text3.onpaste = function(event){
+				var text = event.clipboardData.getData("text");
+				if(!/\d/.test(String.fromCharCode(text))){
+					event.preventDefault();
+				}
+			}
+			//必填字段
+			
+			/* if(document.forms[0].elements[4].checkValidity()){
+				alert("输入不能为空！");
+			}else{
+				document.forms[0].elements[4].submit();
+			} */
+			var selectbox = document.forms[0].elements["selectColor"];
+			var selectedIndex = selectbox.selectedIndex;
+			var selectedOption = selectbox[selectedIndex];
+			var handleChange = function(){
+				//form.submit();
+				console.log("Index = " + selectedIndex + "\n selectedtext = " + selectedOption.text
+						+ "\n selectedValue = " + selectedOption.value);
+			}
+			selectbox.addEventListener("change",handleChange,false);		//无法随着选项更新？？？
+			window.onload = function(){
+				frames["richedit"].document.designMode = "on";				//IE正常运行，Chrome报错Chrome's same origin policy？？？
+			};
+		</script>
+	</body>
+</html>

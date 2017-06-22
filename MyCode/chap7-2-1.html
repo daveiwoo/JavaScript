@@ -1,0 +1,24 @@
+<html>
+<body>
+
+<script type="text/javascript">
+
+function creatArray(){
+	var result = new Array();
+	
+	for(var i=0; i<10; i++){
+		result[i] = (function(){
+			return i
+		})(i); //返回函数
+	}
+	return result;
+}
+var res = creatArray();
+//res[1]();
+alert(res);//结果是一个每一项都为“function(){return i;};”的字符数组？
+//函数调用
+
+</script>
+
+</body>
+</html>

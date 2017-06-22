@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<input type="button" id="myBtn" value="clickMe" onclick="" />
+		
+		<div id = "myDiv" style = "background-color:red;height:100px;width:100px;"></div>
+		<input type="text" name="test" id="myText" value="">
+		
+		<div id = "myContextDiv">right click or ctarl+click me to get a custom context menu.
+								click anywhere to get the default menu.</div>
+		<ul id="myMenu" style="position:absolute;visibility:hidden;background-color:silver">
+			<li><a href="https://www.douban.com/">douban</a></li>
+			<li><a href="https://www.zhihu.com/">zhihu</a></li>
+			<li><a href="https://www.taobao.com/">taobao</a></li>
+		</ul>
+		
+		<ul id="myLinks">
+			<li id="gosomewhere">GoSomewhere</a></li>
+			<li id="dosomething">DoSomething</a></li>
+			<li id="sayhi">SayHi</a></li>
+		</ul>
+			
+		<script>
+			/*
+			console.log(typeof Symbol());    //"symbol"
+			console.log(typeof Function());    //"function"
+			console.log(typeof Object());    //"object"
+			console.log(typeof null)    //"object"
+			*/
+			/********获取用户坐标********/
+			var btn = document.getElementById("myBtn");
+			var handler = function(event){
+				alert(event.clientX + "," + event.clientY);
+			};
+			btn.addEventListener("click",handler,false);
+			
+			/********跨浏览器相关元素********/
+			/*
+			getRelatedTarget:function(event){
+				if(event.relatedTarget){
+					return event.relatedTarget;
+				}else if(event.fromElement){
+					return event.fromElement;
+				}else if(event.toElement){
+					return event.toElement;
+				}else {
+					return null;
+				}
+			}
+			*/
+			
+			/********文本输入********/
+			var myText = document.getElementById("myText");
+			var handleText = function(event){
+				alert(event.keyCode);
+			};
+			myText.addEventListener("keyup",handleText,false);
+			
+			/********contextmenu事件********/
+			var divContext = document.getElementById("myContextDiv");
+			divContext.oncontextmenu = function(event){
+				//event.preventDefault();
+				var menu = document.getElementById("myMenu");
+				menu.style.left = event.clientX + "px";
+				menu.style.top = event.clientY + "px";
+				menu.style.visibility = "visible";
+				
+				menu.onclick = function(event){
+					//event.preventDefault();
+					document.getElementById("myMenu").style.visibility = "visible";
+				}
+			}
+			//divContext.addEventListener("click",handleContext,false);
+			
+			/********beforeunload事件********/
+			/*
+			var handleBeforeunload = function(event){
+				event.preventDefault();
+				var message = "don't leave!plz!";
+				event.returnValue = message;
+				return message;
+			};
+			*/
+			window.addEventListener("beforeunload",function(){
+				event.preventDefault();
+				var message = "don't leave!plz!";	////??无法显示自定义的弹出对话框信息////
+				event.returnValue = message;
+				return message;
+			},false);
+			
+			/********事件委托********/
+			var list = document.getElementById("myLinks");
+			var handleThings = function(event){
+				var target = event.target;
+				switch(target.id){
+					case "dosomething":
+						document.title = "I changed the document's title!";
+						break;
+					case "gosomewhere":
+						location.href = "http://www.douban.com";
+						break;
+					case "sayhi":
+						alert("你好！");
+						break;
+				}
+			}
+			list.addEventListener("click",handleThings,false);
+		</script>
+	</body>
+</html>

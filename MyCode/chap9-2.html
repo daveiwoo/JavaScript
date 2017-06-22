@@ -1,0 +1,22 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<title>9-2</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var hasDontEnuQuirk = function(){
+			var o = {toString:function(){}};
+			for(var prop in o){
+				if(prop == "toString"){
+					return false;
+				}
+			}
+			
+			return true;
+		}
+		
+		alert(hasDontEnuQuirk());
+	</script>	
+</body>
+</html>

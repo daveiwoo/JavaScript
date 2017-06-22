@@ -1,0 +1,24 @@
+<html>
+<body>
+
+<script type="text/javascript">
+
+var numbers = new Array(1,2,3,4,5);
+
+var num1 = numbers.slice(4);
+var num2 = numbers.slice(2,3);
+var num3 = numbers.slice(2,1);
+
+alert(num1);//5
+alert(num2);//3
+alert(num3);
+
+//var num4 = numbers.splice(1,1);
+//var num4 = numbers.splice(1,0,0,0,0);
+var num4 = numbers.splice(1,2,0,0,0);
+alert(numbers);
+alert(num4);
+</script>
+
+</body>
+</html>

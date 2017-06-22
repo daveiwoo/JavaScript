@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<input type="button" id="myBtn" value="clickMe" onclick="" />
+		<script>
+			var btn = document.getElementById("myBtn");
+			btn.onclick = function(event){
+				alert(event.type);
+				event.stopPropagation();	//停止时间在DOM层次的传播，即取消事件的进一步捕获或者冒泡
+			};
+			document.body.onclick = function(event){
+				alert("Body Clicked!");
+			};
+		</script>
+	</body>
+</html>
