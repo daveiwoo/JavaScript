@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>chapter 15 WebGL</title>
+</head>
+
+<body>
+	<canvas id="drawing" width = "200" height = "200" ></canvas>
+	<img src = "file:///G:/avatar.jpg" id="cuteboy" width="100" height="100"/>
+	<script type="text/javascript" >
+		//var uint16 = new Uint16Array(10);
+		//var sub = uint16.subarray(2,5);
+		//console.log(sub.length);
+		var drawing = document.getElementById("drawing");
+		if(drawing.getContext){
+			try{																//getContext()无法创建上下文是有的浏览器会抛出错误
+				var gl = drawing.getContext("experimental-webgl");				//检测浏览器是否支持webgl
+			}catch(ex){
+				//nothing
+			}
+			if(gl){
+				//console.log("你问我资瓷不资瓷，我当然是资瓷的啊！");
+				gl.clearColor(0,0,0,1);
+				gl.clear(gl.COLOR_BUFFER_BIT);
+				gl.viewport(0,0,drawing.width,drawing.height);
+			}else{
+				console.log("不资瓷靴靴！");
+			}
+		}
+	</script>
+</body>
+</html>
