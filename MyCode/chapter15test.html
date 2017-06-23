@@ -9,8 +9,25 @@
 	<img src = "file:///G:/avatar.jpg" id="cuteboy" width="100" height="100"/>
 	<script type="text/javascript" >
 		var myCanvas = document.getElementById("myCanvas");
+		//确定浏览器支持canvas元素
 		if(myCanvas.getContext){
-			var context = myCanvas.getContext("2d");
+			var context = myCanvas.getContext("2d"),
+			//使用图像数据
+			image3 = document.images[0],
+			imageData,data,i,average;
+			context.drawImage(image3,0,0);
+			imageData = context.getImageData(0,0,image3.width,image3.height);		//取得图像数据，ImageData对象的一个实例
+			//关于getImageData出现the canvas has been tainted by cross-origin data问题的解释：http://www.cnblogs.com/jdksummer/articles/2565998.html
+			data=imageData.data;
+			for(i=0;i<data.length;i+=4){
+				average = Math.floor((data[i]+data[i+1]+data[i+2])/3);
+				data[i]=average;
+				data[i+1]=average;
+				data[i+2]=average;
+			}
+			imageData.data = data;
+			context.putImageData(imageData,0,0);
+			/*
 			//阴影
 			context.shadowOffsetX = 5;
 			context.shadowOffsetY = 5;
@@ -47,7 +64,7 @@
 			context.textAlign = "center";
 			context.textBaseline = "middle";
 			context.fillText("12",250,10);
-			/*
+			
 			//复制canvas图形并添加到body中
 			var imgURI = myCanvas.toDataURL("image/png");
 			var image = document.createElement("img");
@@ -66,14 +83,15 @@
 			gradient.addColorStop(1,"black");
 			context.fillStyle = gradient;
 			context.fillRect(30,130,50,50);
-			*/
+			
 			
 			//模式
 			//context.translate(30,250);
 			var image2 = document.getElementById("cuteboy");
 			var	pat = context.createPattern(image2,"repeat");
-			context.fillStyle = pat;
+			context.fillStyle = pat;							//chrome好像不太支持
 			context.fillRect(0,0,500,500);
+			*/
 		}else{
 			console.log("不支持getContext");
 		}
