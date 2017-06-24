@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>chapter 16</title>
+</head>
+<body>
+
+<input id="dragout" type="text" name="firstname" value="" />
+<div id="draginto">Drag into ME!</div>
+
+<script>
+	var dragout = document.getElementById("dragout");
+	var draginto = document.getElementById("draginto");
+	/* dragout.ondragstart = function(event){
+		event.dataTransfer.dropEffect = "move";
+		event.dataTransfer.effectAllowed = "move";		
+	} */
+	draginto.ondragenter = function(event){
+		event.preventDefault();
+		event.dataTransfer.dropEffect = "move";
+		event.dataTransfer.effectAllowed = "move";
+		
+	}
+	draginto.ondragover = function(event){
+		event.preventDefault();		
+	}
+	draginto.ondrop = function(event){
+		event.dataTransfer.setData("text",dragout.value);
+		var text = event.dataTransfer.getData("text");
+		draginto.value = draginto.value + text;
+	}
+	//并没有能够实现预想的把文本框中的元素拖进<div>中，参见书中P485
+</script>
+
+</body>
+</html>
